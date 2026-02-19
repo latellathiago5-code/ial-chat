@@ -93,70 +93,6 @@ body{
     animation:popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Tema personalizado */
-body.custom{
-    background:var(--custom-bg, #0b0b0d);
-    color:var(--custom-text, #eee);
-}
-
-body.custom #bgBlur{
-    background:
-        radial-gradient(700px 400px at 15% 15%, var(--custom-primary, #1f1f1f), transparent 60%),
-        radial-gradient(700px 400px at 85% 85%, var(--custom-secondary, #141414), transparent 60%);
-}
-
-body.custom .sidebar{
-    background:rgba(25,25,25,.55);
-    backdrop-filter:blur(18px);
-    border:1px solid var(--custom-primary-alpha, rgba(100,150,255,.1));
-}
-
-body.custom .msg.user{
-    background:var(--custom-primary-alpha, rgba(100,150,255,.2));
-    border:1px solid var(--custom-primary-alpha, rgba(100,150,255,.3));
-}
-
-body.custom .msg.bot{
-    background:var(--custom-secondary-alpha, rgba(150,100,255,.15));
-}
-
-body.custom .chatItem:hover{
-    background:var(--custom-primary-alpha, rgba(100,150,255,.1));
-    border-color:var(--custom-primary-alpha, rgba(100,150,255,.2));
-}
-
-body.custom .chatItem.active{
-    background:var(--custom-primary-alpha, rgba(100,150,255,.15));
-    border-color:var(--custom-primary-alpha, rgba(100,150,255,.3));
-}
-
-body.custom .inputBar input[type="text"]{
-    background:var(--custom-primary-alpha, rgba(100,150,255,.08)) !important;
-    border-color:var(--custom-primary-alpha, rgba(100,150,255,.15));
-}
-
-body.custom .inputBar input[type="text"]:focus{
-    background:var(--custom-primary-alpha, rgba(100,150,255,.12)) !important;
-    border-color:var(--custom-primary-alpha, rgba(100,150,255,.3));
-}
-
-body.custom .inputBar button{
-    background:var(--custom-primary-alpha, rgba(100,150,255,.2));
-}
-
-body.custom .inputBar button:hover{
-    background:var(--custom-primary-alpha, rgba(100,150,255,.3));
-}
-
-body.custom .topBar{
-    background:rgba(25,25,25,.45);
-    border-bottom:1px solid var(--custom-primary-alpha, rgba(100,150,255,.1));
-}
-
-body.custom .chatListHeader button:hover{
-    background:var(--custom-primary-alpha, rgba(100,150,255,.2));
-}
-
 #bgBlur{
     position:fixed;
     inset:0;
@@ -186,25 +122,24 @@ body.purple #bgBlur{
         radial-gradient(700px 400px at 85% 85%, #270f44, transparent 60%);
 }
 
-body.neon #bgBlur{
+body.pink #bgBlur{
     background:
-        radial-gradient(700px 400px at 15% 15%, #00ff88, transparent 60%),
-        radial-gradient(700px 400px at 85% 85%, #0088ff, transparent 60%);
+        radial-gradient(700px 400px at 15% 15%, #ff1493, transparent 60%),
+        radial-gradient(700px 400px at 85% 85%, #ff69b4, transparent 60%);
     filter:blur(80px);
 }
 
-body.minimal #bgBlur{
+body.gray #bgBlur{
     background:
-        radial-gradient(700px 400px at 15% 15%, #e0e0e0, transparent 60%),
-        radial-gradient(700px 400px at 85% 85%, #f5f5f5, transparent 60%);
+        radial-gradient(700px 400px at 15% 15%, #808080, transparent 60%),
+        radial-gradient(700px 400px at 85% 85%, #a9a9a9, transparent 60%);
 }
 
 /* Temas */
 body.light{background:#f1f2f4;color:#1a1a1a}
-body.blue{background:#0a1628;color:#e0f2ff}
-body.purple{background:#1a0a28;color:#f0e0ff}
-body.neon{background:#0a0e27;color:#00ff88}
-body.minimal{background:#fafafa;color:#222}
+body.dark{background:#0b0b0d;color:#eee}
+body.pink{background:#2a0a1a;color:#ffb3d9}
+body.gray{background:#1a1a1a;color:#d0d0d0}
 
 canvas{position:fixed;inset:0;z-index:-2}
 
@@ -332,20 +267,20 @@ body.light .searchBox input::placeholder{
     color:rgba(0,0,0,.4) !important;
 }
 
-body.blue .searchBox input{
-    background:rgba(100,150,255,.08) !important;
+body.pink .searchBox input{
+    background:rgba(255,20,147,.08) !important;
 }
 
-body.blue .searchBox input::placeholder{
-    color:rgba(100,150,255,.4) !important;
+body.pink .searchBox input::placeholder{
+    color:rgba(255,20,147,.4) !important;
 }
 
-body.purple .searchBox input{
-    background:rgba(150,100,255,.08) !important;
+body.gray .searchBox input{
+    background:rgba(128,128,128,.08) !important;
 }
 
-body.purple .searchBox input::placeholder{
-    color:rgba(150,100,255,.4) !important;
+body.gray .searchBox input::placeholder{
+    color:rgba(128,128,128,.4) !important;
 }
 
 #searchInput:-webkit-autofill,
@@ -398,24 +333,24 @@ body.light .chatItem.active{
     border-color:rgba(0,0,0,.12);
 }
 
-body.blue .chatItem:hover{
-    background:rgba(100,150,255,.1);
-    border-color:rgba(100,150,255,.2);
+body.pink .chatItem:hover{
+    background:rgba(255,20,147,.1);
+    border-color:rgba(255,20,147,.2);
 }
 
-body.blue .chatItem.active{
-    background:rgba(100,150,255,.15);
-    border-color:rgba(100,150,255,.3);
+body.pink .chatItem.active{
+    background:rgba(255,20,147,.15);
+    border-color:rgba(255,20,147,.3);
 }
 
-body.purple .chatItem:hover{
-    background:rgba(150,100,255,.1);
-    border-color:rgba(150,100,255,.2);
+body.gray .chatItem:hover{
+    background:rgba(128,128,128,.1);
+    border-color:rgba(128,128,128,.2);
 }
 
-body.purple .chatItem.active{
-    background:rgba(150,100,255,.15);
-    border-color:rgba(150,100,255,.3);
+body.gray .chatItem.active{
+    background:rgba(128,128,128,.15);
+    border-color:rgba(128,128,128,.3);
 }
 
 .chatItem span{
@@ -488,196 +423,62 @@ body.light .settingsRow select option{
     color:#111;
 }
 
-body.blue .settingsRow select{
-    background:rgba(100,150,255,.2);
+body.pink .settingsRow select{
+    background:rgba(255,20,147,.2);
 }
 
-body.blue .settingsRow select option{
-    background:#0a1628;
-    color:#e0f2ff;
+body.pink .settingsRow select option{
+    background:#2a0a1a;
+    color:#ffb3d9;
 }
 
-body.purple .settingsRow select{
-    background:rgba(150,100,255,.2);
+body.gray .settingsRow select{
+    background:rgba(128,128,128,.2);
 }
 
-body.purple .settingsRow select option{
-    background:#1a0a28;
-    color:#f0e0ff;
+body.gray .settingsRow select option{
+    background:#1a1a1a;
+    color:#d0d0d0;
 }
 
-body.neon .sidebar{
-    background:rgba(0,255,136,.1);
-    border-right:1px solid rgba(0,255,136,.2);
+body.pink .sidebar{
+    background:rgba(255,20,147,.1);
+    border-right:1px solid rgba(255,20,147,.2);
 }
 
-body.neon .msg.user{
-    background:rgba(0,255,136,.15);
-    border:1px solid rgba(0,255,136,.3);
+body.pink .msg.user{
+    background:rgba(255,20,147,.15);
+    border:1px solid rgba(255,20,147,.3);
 }
 
-body.neon .msg.bot{
-    background:rgba(0,136,255,.15);
-    border:1px solid rgba(0,136,255,.3);
+body.pink .msg.bot{
+    background:rgba(255,20,147,.08);
+    border:1px solid rgba(255,20,147,.2);
 }
 
-body.neon .chatItem:hover{
-    background:rgba(0,255,136,.1);
-    border-color:rgba(0,255,136,.2);
+body.pink .topBar{
+    background:rgba(255,20,147,.05);
+    border-bottom:1px solid rgba(255,20,147,.1);
 }
 
-body.neon .chatItem.active{
-    background:rgba(0,255,136,.15);
-    border-color:rgba(0,255,136,.3);
+body.gray .sidebar{
+    background:rgba(128,128,128,.1);
+    border-right:1px solid rgba(128,128,128,.2);
 }
 
-body.neon .inputBar input[type="text"]{
-    background:rgba(0,255,136,.08);
-    color:#00ff88;
+body.gray .msg.user{
+    background:rgba(128,128,128,.15);
+    border:1px solid rgba(128,128,128,.3);
 }
 
-body.neon .inputBar button{
-    background:rgba(0,255,136,.2);
-    color:#00ff88;
+body.gray .msg.bot{
+    background:rgba(128,128,128,.08);
+    border:1px solid rgba(128,128,128,.2);
 }
 
-body.neon .inputBar button:hover{
-    background:rgba(0,255,136,.3);
-}
-
-body.neon .topBar{
-    background:rgba(0,255,136,.05);
-    border-bottom:1px solid rgba(0,255,136,.2);
-}
-
-body.minimal .sidebar{
-    background:rgba(0,0,0,.02);
-    border-right:1px solid rgba(0,0,0,.1);
-}
-
-body.minimal .msg.user{
-    background:rgba(0,0,0,.05);
-    border:1px solid rgba(0,0,0,.1);
-}
-
-body.minimal .msg.bot{
-    background:rgba(0,0,0,.03);
-    border:1px solid rgba(0,0,0,.08);
-}
-
-body.minimal .chatItem:hover{
-    background:rgba(0,0,0,.04);
-    border-color:rgba(0,0,0,.08);
-}
-
-body.minimal .chatItem.active{
-    background:rgba(0,0,0,.08);
-    border-color:rgba(0,0,0,.12);
-}
-
-body.minimal .inputBar input[type="text"]{
-    background:rgba(0,0,0,.04);
-    color:#222;
-}
-
-body.minimal .inputBar button{
-    background:rgba(0,0,0,.08);
-    color:#222;
-}
-
-body.minimal .inputBar button:hover{
-    background:rgba(0,0,0,.12);
-}
-
-body.minimal .topBar{
-    background:rgba(0,0,0,.02);
-    border-bottom:1px solid rgba(0,0,0,.08);
-}
-
-body.neon .sidebar{
-    background:rgba(0,255,136,.1);
-    backdrop-filter:blur(18px);
-    border:1px solid rgba(0,255,136,.2);
-}
-
-body.neon .msg.user{
-    background:rgba(0,255,136,.15);
-    border:1px solid rgba(0,255,136,.3);
-}
-
-body.neon .msg.bot{
-    background:rgba(0,136,255,.15);
-}
-
-body.neon .chatItem:hover{
-    background:rgba(0,255,136,.1);
-    border-color:rgba(0,255,136,.2);
-}
-
-body.neon .chatItem.active{
-    background:rgba(0,255,136,.15);
-    border-color:rgba(0,255,136,.3);
-}
-
-body.neon .inputBar input[type="text"]{
-    background:rgba(0,255,136,.08);
-    border-color:rgba(0,255,136,.15);
-}
-
-body.neon .inputBar button{
-    background:rgba(0,255,136,.2);
-}
-
-body.neon .inputBar button:hover{
-    background:rgba(0,255,136,.3);
-}
-
-body.neon .topBar{
-    background:rgba(0,255,136,.05);
-    border-bottom:1px solid rgba(0,255,136,.1);
-}
-
-body.minimal .sidebar{
-    background:rgba(0,0,0,.02);
-    backdrop-filter:blur(18px);
-    border-right:1px solid rgba(0,0,0,.1);
-}
-
-body.minimal .msg.user{
-    background:rgba(0,0,0,.08);
-    border:1px solid rgba(0,0,0,.1);
-}
-
-body.minimal .msg.bot{
-    background:rgba(0,0,0,.04);
-}
-
-body.minimal .chatItem:hover{
-    background:rgba(0,0,0,.05);
-    border-color:rgba(0,0,0,.1);
-}
-
-body.minimal .chatItem.active{
-    background:rgba(0,0,0,.08);
-    border-color:rgba(0,0,0,.15);
-}
-
-body.minimal .inputBar input[type="text"]{
-    background:rgba(0,0,0,.04);
-    border-color:rgba(0,0,0,.1);
-}
-
-body.minimal .inputBar button{
-    background:rgba(0,0,0,.06);
-}
-
-body.minimal .inputBar button:hover{
-    background:rgba(0,0,0,.1);
-}
-
-body.minimal .topBar{
-    background:rgba(0,0,0,.02);
-    border-bottom:1px solid rgba(0,0,0,.08);
+body.gray .topBar{
+    background:rgba(128,128,128,.05);
+    border-bottom:1px solid rgba(128,128,128,.1);
 }
 
 #customThemePanel{
@@ -823,20 +624,20 @@ body.light .inputBar input[type="text"]::placeholder{
     color:rgba(0,0,0,.4);
 }
 
-body.blue .inputBar input[type="text"]{
-    background:rgba(100,150,255,.08);
+body.pink .inputBar input[type="text"]{
+    background:rgba(255,20,147,.08);
 }
 
-body.blue .inputBar input[type="text"]::placeholder{
-    color:rgba(100,150,255,.4);
+body.pink .inputBar input[type="text"]::placeholder{
+    color:rgba(255,20,147,.4);
 }
 
-body.purple .inputBar input[type="text"]{
-    background:rgba(150,100,255,.08);
+body.gray .inputBar input[type="text"]{
+    background:rgba(128,128,128,.08);
 }
 
-body.purple .inputBar input[type="text"]::placeholder{
-    color:rgba(150,100,255,.4);
+body.gray .inputBar input[type="text"]::placeholder{
+    color:rgba(128,128,128,.4);
 }
 
 .inputBar button{
@@ -867,20 +668,20 @@ body.light .inputBar button:hover{
     background:rgba(0,0,0,.12);
 }
 
-body.blue .inputBar button{
-    background:rgba(100,150,255,.2);
+body.pink .inputBar button{
+    background:rgba(255,20,147,.2);
 }
 
-body.blue .inputBar button:hover{
-    background:rgba(100,150,255,.3);
+body.pink .inputBar button:hover{
+    background:rgba(255,20,147,.3);
 }
 
-body.purple .inputBar button{
-    background:rgba(150,100,255,.2);
+body.gray .inputBar button{
+    background:rgba(128,128,128,.2);
 }
 
-body.purple .inputBar button:hover{
-    background:rgba(150,100,255,.3);
+body.gray .inputBar button:hover{
+    background:rgba(128,128,128,.3);
 }
 
 .home{
@@ -949,16 +750,16 @@ body.light #msgInput:-webkit-autofill:focus {
     -webkit-box-shadow: 0 0 0 1000px rgba(0,0,0,.06) inset;
 }
 
-body.blue #msgInput:-webkit-autofill,
-body.blue #msgInput:-webkit-autofill:hover,
-body.blue #msgInput:-webkit-autofill:focus {
-    -webkit-text-fill-color: #e0f2ff;
-    -webkit-box-shadow: 0 0 0 1000px rgba(100,150,255,.08) inset;
+body.pink #msgInput:-webkit-autofill,
+body.pink #msgInput:-webkit-autofill:hover,
+body.pink #msgInput:-webkit-autofill:focus {
+    -webkit-text-fill-color: #ffb3d9;
+    -webkit-box-shadow: 0 0 0 1000px rgba(255,20,147,.08) inset;
 }
 
-body.purple #msgInput:-webkit-autofill,
-body.purple #msgInput:-webkit-autofill:hover,
-body.purple #msgInput:-webkit-autofill:focus {
-    -webkit-text-fill-color: #f0e0ff;
-    -webkit-box-shadow: 0 0 0 1000px rgba(150,100,255,.08) inset;
+body.gray #msgInput:-webkit-autofill,
+body.gray #msgInput:-webkit-autofill:hover,
+body.gray #msgInput:-webkit-autofill:focus {
+    -webkit-text-fill-color: #d0d0d0;
+    -webkit-box-shadow: 0 0 0 1000px rgba(128,128,128,.08) inset;
 }

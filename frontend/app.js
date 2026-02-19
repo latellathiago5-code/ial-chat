@@ -132,25 +132,6 @@ async function loadTheme() {
     
     if (data.theme) {
       document.getElementById('themeSelect').value = data.theme;
-      
-      if (data.theme === 'custom' && data.customTheme) {
-        document.getElementById('customThemePanel').style.display = 'flex';
-        document.getElementById('colorPrimary').value = data.customTheme.primary;
-        document.getElementById('colorSecondary').value = data.customTheme.secondary;
-        
-        // Aplicar tema personalizado
-        const hexToRgba = (hex, alpha) => {
-          const r = parseInt(hex.slice(1, 3), 16);
-          const g = parseInt(hex.slice(3, 5), 16);
-          const b = parseInt(hex.slice(5, 7), 16);
-          return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-        };
-        
-        document.body.style.setProperty('--custom-primary', data.customTheme.primary);
-        document.body.style.setProperty('--custom-secondary', data.customTheme.secondary);
-        document.body.style.setProperty('--custom-primary-alpha', hexToRgba(data.customTheme.primary, 0.2));
-      }
-      
       document.body.className = data.theme;
     }
   } catch (err) {
@@ -160,13 +141,7 @@ async function loadTheme() {
 
 async function changeTheme() {
   const theme = document.getElementById('themeSelect').value;
-  
-  if (theme === 'custom') {
-    document.getElementById('customThemePanel').style.display = 'flex';
-  } else {
-    document.getElementById('customThemePanel').style.display = 'none';
-    document.body.className = theme;
-  }
+  document.body.className = theme;
 
   try {
     await fetch(API_URL + '/theme', {
@@ -182,42 +157,6 @@ async function changeTheme() {
   }
 }
 
-async function updateCustomTheme() {
-  const primary = document.getElementById('colorPrimary').value;
-  const secondary = document.getElementById('colorSecondary').value;
-  
-  const customTheme = { primary, secondary };
-  
-  // Convertir hex a rgba para transparencias
-  const hexToRgba = (hex, alpha) => {
-    const r = parseInt(hex.slice(1, 3), 16);
-    const g = parseInt(hex.slice(3, 5), 16);
-    const b = parseInt(hex.slice(5, 7), 16);
-    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-  };
-  
-  // Aplicar colores personalizados
-  document.body.style.setProperty('--custom-primary', primary);
-  document.body.style.setProperty('--custom-secondary', secondary);
-  document.body.style.setProperty('--custom-primary-alpha', hexToRgba(primary, 0.2));
-  document.body.style.setProperty('--custom-secondary-alpha', hexToRgba(secondary, 0.15));
-  document.body.style.setProperty('--custom-bg', '#0b0b0d');
-  document.body.style.setProperty('--custom-text', '#eee');
-  document.body.className = 'custom';
-
-  try {
-    await fetch(API_URL + '/theme', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ theme: 'custom', customTheme })
-    });
-  } catch (err) {
-    console.error('Error guardando tema:', err);
-  }
-}
 
 // Chats
 async function loadChats() {
