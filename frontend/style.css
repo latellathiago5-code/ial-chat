@@ -117,6 +117,13 @@ body.pink #bgBlur{
     filter:blur(80px);
 }
 
+body.red #bgBlur{
+    background:
+        radial-gradient(700px 400px at 15% 15%, #ff0000, transparent 60%),
+        radial-gradient(700px 400px at 85% 85%, #cc0000, transparent 60%);
+    filter:blur(80px);
+}
+
 body.gray #bgBlur{
     background:
         radial-gradient(700px 400px at 15% 15%, #808080, transparent 60%),
@@ -127,6 +134,7 @@ body.gray #bgBlur{
 body.light{background:#f1f2f4;color:#1a1a1a}
 body.dark{background:#0b0b0d;color:#eee}
 body.pink{background:#2a0a1a;color:#ffb3d9}
+body.red{background:#1a0a0a;color:#ff6b6b}
 body.gray{background:#1a1a1a;color:#d0d0d0}
 
 canvas{position:fixed;inset:0;z-index:-2}
@@ -263,6 +271,14 @@ body.pink .searchBox input::placeholder{
     color:rgba(255,20,147,.4) !important;
 }
 
+body.red .searchBox input{
+    background:rgba(255,0,0,.08) !important;
+}
+
+body.red .searchBox input::placeholder{
+    color:rgba(255,0,0,.4) !important;
+}
+
 body.gray .searchBox input{
     background:rgba(128,128,128,.08) !important;
 }
@@ -329,6 +345,16 @@ body.pink .chatItem:hover{
 body.pink .chatItem.active{
     background:rgba(255,20,147,.15);
     border-color:rgba(255,20,147,.3);
+}
+
+body.red .chatItem:hover{
+    background:rgba(255,0,0,.1);
+    border-color:rgba(255,0,0,.2);
+}
+
+body.red .chatItem.active{
+    background:rgba(255,0,0,.15);
+    border-color:rgba(255,0,0,.3);
 }
 
 body.gray .chatItem:hover{
@@ -420,6 +446,15 @@ body.pink .settingsRow select option{
     color:#ffb3d9;
 }
 
+body.red .settingsRow select{
+    background:rgba(255,0,0,.2);
+}
+
+body.red .settingsRow select option{
+    background:#1a0a0a;
+    color:#ff6b6b;
+}
+
 body.gray .settingsRow select{
     background:rgba(128,128,128,.2);
 }
@@ -447,6 +482,26 @@ body.pink .msg.bot{
 body.pink .topBar{
     background:rgba(255,20,147,.05);
     border-bottom:1px solid rgba(255,20,147,.1);
+}
+
+body.red .sidebar{
+    background:rgba(255,0,0,.1);
+    border-right:1px solid rgba(255,0,0,.2);
+}
+
+body.red .msg.user{
+    background:rgba(255,0,0,.15);
+    border:1px solid rgba(255,0,0,.3);
+}
+
+body.red .msg.bot{
+    background:rgba(255,0,0,.08);
+    border:1px solid rgba(255,0,0,.2);
+}
+
+body.red .topBar{
+    background:rgba(255,0,0,.05);
+    border-bottom:1px solid rgba(255,0,0,.1);
 }
 
 body.gray .sidebar{
@@ -604,6 +659,14 @@ body.pink .inputBar input[type="text"]::placeholder{
     color:rgba(255,20,147,.4);
 }
 
+body.red .inputBar input[type="text"]{
+    background:rgba(255,0,0,.08);
+}
+
+body.red .inputBar input[type="text"]::placeholder{
+    color:rgba(255,0,0,.4);
+}
+
 body.gray .inputBar input[type="text"]{
     background:rgba(128,128,128,.08);
 }
@@ -646,6 +709,14 @@ body.pink .inputBar button{
 
 body.pink .inputBar button:hover{
     background:rgba(255,20,147,.3);
+}
+
+body.red .inputBar button{
+    background:rgba(255,0,0,.2);
+}
+
+body.red .inputBar button:hover{
+    background:rgba(255,0,0,.3);
 }
 
 body.gray .inputBar button{
@@ -727,6 +798,13 @@ body.pink #msgInput:-webkit-autofill:hover,
 body.pink #msgInput:-webkit-autofill:focus {
     -webkit-text-fill-color: #ffb3d9;
     -webkit-box-shadow: 0 0 0 1000px rgba(255,20,147,.08) inset;
+}
+
+body.red #msgInput:-webkit-autofill,
+body.red #msgInput:-webkit-autofill:hover,
+body.red #msgInput:-webkit-autofill:focus {
+    -webkit-text-fill-color: #ff6b6b;
+    -webkit-box-shadow: 0 0 0 1000px rgba(255,0,0,.08) inset;
 }
 
 body.gray #msgInput:-webkit-autofill,
