@@ -3,49 +3,59 @@ const auth = require('../middleware/auth');
 
 const router = express.Router();
 
-// Generar respuesta con Groq (gratis)
+// Generar respuesta con Groq o Gemini (gratis)
 router.post('/generate', auth, async (req, res) => {
   try {
     const { messages } = req.body;
 
     // Detectar si hay imágenes en los mensajes
     const hasImages = messages.some(m => m.image);
-    const model = hasImages ? 'llama-3.2-11b-vision-preview' : 'llama-3.3-70b-versatile';
 
-    console.log('Modelo seleccionado:', model);
-    console.log('Tiene imágenes:', hasImages);
+    // Si hay imágenes, usar Gemini; si no, usar Groq
+    if (hasImages) {
+      console.log('Usando Gemini para análisis de imagen');
+      
+      // Usar Gemini para imágenes
+      const imageMessage = messages.find(m => m.image);
+      const base64Data = imageMessage.image.split(',')[1]; // Remover el prefijo data:image/...
+      
+      const geminiResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{
+            parts: [
+              { text: imageMessage.text || '¿Qué ves en esta imagen? Describila en detalle en español.' },
+              {
+                inline_data: {
+                  mime_type: 'image/jpeg',
+                  data: base64Data
+                }
+              }
+            ]
+          }]
+        })
+      });
 
-    // Formatear mensajes para la API
-    const formattedMessages = messages.map(m => {
-      const msg = {
-        role: m.role === 'bot' ? 'assistant' : m.role,
-      };
+      const geminiData = await geminiResponse.json();
+      console.log('Respuesta de Gemini:', geminiData);
 
-      // Si tiene imagen, usar formato de contenido múltiple
-      if (m.image) {
-        console.log('Procesando mensaje con imagen');
-        msg.content = [
-          { type: 'text', text: m.text || '¿Qué ves en esta imagen?' },
-          { type: 'image_url', image_url: { url: m.image } }
-        ];
-      } else {
-        msg.content = m.text;
+      if (!geminiResponse.ok) {
+        throw new Error(geminiData.error?.message || 'Error en Gemini API');
       }
 
-      return msg;
-    });
+      const text = geminiData.candidates[0].content.parts[0].text;
+      return res.json({ text });
+    }
 
-    const requestBody = {
-      model,
-      messages: [
-        { role: 'system', content: 'Sos un asistente útil que siempre responde en español. Respondé de forma clara, amigable y concisa. Si te muestran una imagen, describila y analizala en detalle.' },
-        ...formattedMessages
-      ],
-      temperature: 0.7,
-      max_tokens: 1000
-    };
+    // Para mensajes de texto, usar Groq
+    console.log('Usando Groq para texto');
+    const model = 'llama-3.3-70b-versatile';
 
-    console.log('Request body:', JSON.stringify(requestBody, null, 2).substring(0, 500));
+    const formattedMessages = messages.map(m => ({
+      role: m.role === 'bot' ? 'assistant' : m.role,
+      content: m.text
+    }));
 
     const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
@@ -53,12 +63,18 @@ router.post('/generate', auth, async (req, res) => {
         'Authorization': `Bearer ${process.env.GROQ_API_KEY}`,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(requestBody)
+      body: JSON.stringify({
+        model,
+        messages: [
+          { role: 'system', content: 'Sos un asistente útil que siempre responde en español. Respondé de forma clara, amigable y concisa.' },
+          ...formattedMessages
+        ],
+        temperature: 0.7,
+        max_tokens: 1000
+      })
     });
 
     const data = await response.json();
-
-    console.log('Respuesta de Groq:', data);
 
     if (!response.ok) {
       console.error('Error de Groq:', data);
@@ -69,7 +85,7 @@ router.post('/generate', auth, async (req, res) => {
       text: data.choices[0].message.content 
     });
   } catch (err) {
-    console.error('Error Groq:', err);
+    console.error('Error en IA:', err);
     res.status(500).json({ 
       error: 'Error al generar respuesta',
       fallback: 'Lo siento, hubo un error. Por favor intenta de nuevo.' 
