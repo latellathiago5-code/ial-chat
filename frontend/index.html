@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>iaL - Chat IA</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="bgBlur"></div>
+<canvas id="bg"></canvas>
+
+<!-- Login/Register -->
+<div id="authModal" class="modal">
+  <div class="modal-content">
+    <h2 id="authTitle">Iniciar Sesión</h2>
+    <form id="authForm">
+      <input type="text" id="authUsername" placeholder="Usuario" style="display:none">
+      <input type="email" id="authEmail" placeholder="Email" required>
+      <input type="password" id="authPassword" placeholder="Contraseña" required>
+      <button type="submit">Entrar</button>
+    </form>
+    <p class="auth-toggle">
+      <span id="authToggleText">¿No tenés cuenta?</span>
+      <a href="#" onclick="toggleAuthMode(event)">Registrate</a>
+    </p>
+  </div>
+</div>
+
+<div class="app" id="app" style="display:none">
+
+<div class="sidebar">
+  <div class="logo">iaL</div>
+
+  <div class="chatListHeader">
+    <span>Chats</span>
+    <button onclick="newChat()" title="Nuevo chat" aria-label="Crear nuevo chat">＋</button>
+  </div>
+
+  <div class="searchBox">
+    <input type="text" id="searchInput" placeholder="Buscar chats..." 
+           oninput="filterChats()" aria-label="Buscar en chats">
+  </div>
+
+  <div class="chatList" id="chatList"></div>
+
+  <div class="settingsWrap">
+    <button class="settingsBtn" onclick="toggleSettings()" aria-label="Configuración">⚙</button>
+    <div class="settingsPanel" id="settingsPanel">
+      <div class="settingsRow">
+        <span>Tema</span>
+        <select id="themeSelect" onchange="changeTheme()">
+          <option value="dark">Oscuro</option>
+          <option value="light">Claro</option>
+          <option value="blue">Azul</option>
+          <option value="purple">Púrpura</option>
+          <option value="custom">Personalizado</option>
+        </select>
+      </div>
+      <div id="customThemePanel" style="display:none;margin-top:10px">
+        <input type="color" id="colorPrimary" onchange="updateCustomTheme()">
+        <input type="color" id="colorSecondary" onchange="updateCustomTheme()">
+      </div>
+      <div class="settingsRow">
+        <button onclick="logout()" style="width:100%;padding:8px;border-radius:6px;border:none;background:rgba(255,100,100,.3);cursor:pointer;color:inherit;margin-top:10px">
+          Cerrar Sesión
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="topBar">
+    <span id="topTitle">iaL</span>
+    <div>
+      <button id="shareBtn" style="display:none" onclick="shareChat()" title="Compartir">🔗</button>
+      <button id="exportBtn" style="display:none" onclick="exportChat()" title="Exportar">📥</button>
+      <button id="clearBtn" style="display:none" onclick="clearChat()" title="Vaciar">🗑</button>
+    </div>
+  </div>
+
+  <div class="chatPanel" id="chatPanel">
+    <div class="home">iaL</div>
+  </div>
+
+  <div class="inputBar">
+    <input type="file" id="fileInput" style="display:none" onchange="handleFileUpload()" accept="image/*,.pdf,.txt,.doc,.docx">
+    <button onclick="document.getElementById('fileInput').click()" title="Adjuntar archivo">📎</button>
+    <input id="msgInput" placeholder="Escribí..." 
+           onkeydown="if(event.key==='Enter')sendMsg()"
+           oninput="handleTyping()"
+           aria-label="Escribe tu mensaje">
+    <button onclick="sendMsg()" aria-label="Enviar mensaje">Enviar</button>
+  </div>
+</div>
+
+</div>
+
+<script src="https://cdn.socket.io/4.6.0/socket.io.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
