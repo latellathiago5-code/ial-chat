@@ -9,56 +9,76 @@ body{
 }
 
 /* Animaciones de entrada */
-@keyframes fadeInUp{
-    from{opacity:0;transform:translateY(30px)}
-    to{opacity:1;transform:translateY(0)}
-}
-
 @keyframes fadeIn{
     from{opacity:0}
     to{opacity:1}
 }
 
 @keyframes slideInLeft{
-    from{opacity:0;transform:translateX(-50px)}
-    to{opacity:1;transform:translateX(0)}
+    0%{opacity:0;transform:translateX(-100px)}
+    100%{opacity:1;transform:translateX(0)}
 }
 
 @keyframes slideInRight{
-    from{opacity:0;transform:translateX(50px)}
-    to{opacity:1;transform:translateX(0)}
+    0%{opacity:0;transform:translateX(100px)}
+    100%{opacity:1;transform:translateX(0)}
+}
+
+@keyframes slideInDown{
+    0%{opacity:0;transform:translateY(-50px)}
+    100%{opacity:1;transform:translateY(0)}
+}
+
+@keyframes slideInUp{
+    0%{opacity:0;transform:translateY(50px)}
+    100%{opacity:1;transform:translateY(0)}
+}
+
+@keyframes scaleIn{
+    0%{opacity:0;transform:scale(0.9)}
+    100%{opacity:1;transform:scale(1)}
+}
+
+@keyframes popIn{
+    0%{opacity:0;transform:scale(0.5) rotate(-5deg)}
+    70%{transform:scale(1.05) rotate(2deg)}
+    100%{opacity:1;transform:scale(1) rotate(0)}
 }
 
 .app{
-    animation:fadeIn 0.3s ease-out;
+    animation:fadeIn 0.4s ease-out;
 }
 
 .sidebar{
-    animation:slideInLeft 0.5s ease-out;
+    animation:slideInLeft 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.logo{
+    animation:popIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .main{
-    animation:fadeIn 0.6s ease-out;
+    animation:fadeIn 0.5s ease-out 0.2s backwards;
 }
 
 .topBar{
-    animation:slideInRight 0.7s ease-out;
+    animation:slideInDown 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s backwards;
 }
 
 .chatPanel{
-    animation:fadeInUp 0.9s ease-out;
+    animation:scaleIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s backwards;
 }
 
 .inputBar{
-    animation:fadeInUp 1s ease-out;
+    animation:slideInUp 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.6s backwards;
 }
 
 .msg{
-    animation:fadeInUp 0.4s ease-out;
+    animation:slideInUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .chatItem{
-    animation:fadeInUp 0.3s ease-out;
+    animation:slideInLeft 0.3s ease-out;
 }
 
 .modal{
@@ -66,13 +86,76 @@ body{
 }
 
 .modal-content{
-    animation:fadeInUp 0.4s ease-out;
+    animation:popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Temas */
-body.light{background:#f1f2f4;color:#1a1a1a}
-body.blue{background:#0a1628;color:#e0f2ff}
-body.purple{background:#1a0a28;color:#f0e0ff}
+.settingsPanel{
+    animation:popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Tema personalizado */
+body.custom{
+    background:var(--custom-bg, #0b0b0d);
+    color:var(--custom-text, #eee);
+}
+
+body.custom #bgBlur{
+    background:
+        radial-gradient(700px 400px at 15% 15%, var(--custom-primary, #1f1f1f), transparent 60%),
+        radial-gradient(700px 400px at 85% 85%, var(--custom-secondary, #141414), transparent 60%);
+}
+
+body.custom .sidebar{
+    background:rgba(25,25,25,.55);
+    backdrop-filter:blur(18px);
+    border:1px solid var(--custom-primary-alpha, rgba(100,150,255,.1));
+}
+
+body.custom .msg.user{
+    background:var(--custom-primary-alpha, rgba(100,150,255,.2));
+    border:1px solid var(--custom-primary-alpha, rgba(100,150,255,.3));
+}
+
+body.custom .msg.bot{
+    background:var(--custom-secondary-alpha, rgba(150,100,255,.15));
+}
+
+body.custom .chatItem:hover{
+    background:var(--custom-primary-alpha, rgba(100,150,255,.1));
+    border-color:var(--custom-primary-alpha, rgba(100,150,255,.2));
+}
+
+body.custom .chatItem.active{
+    background:var(--custom-primary-alpha, rgba(100,150,255,.15));
+    border-color:var(--custom-primary-alpha, rgba(100,150,255,.3));
+}
+
+body.custom .inputBar input[type="text"]{
+    background:var(--custom-primary-alpha, rgba(100,150,255,.08)) !important;
+    border-color:var(--custom-primary-alpha, rgba(100,150,255,.15));
+}
+
+body.custom .inputBar input[type="text"]:focus{
+    background:var(--custom-primary-alpha, rgba(100,150,255,.12)) !important;
+    border-color:var(--custom-primary-alpha, rgba(100,150,255,.3));
+}
+
+body.custom .inputBar button{
+    background:var(--custom-primary-alpha, rgba(100,150,255,.2));
+}
+
+body.custom .inputBar button:hover{
+    background:var(--custom-primary-alpha, rgba(100,150,255,.3));
+}
+
+body.custom .topBar{
+    background:rgba(25,25,25,.45);
+    border-bottom:1px solid var(--custom-primary-alpha, rgba(100,150,255,.1));
+}
+
+body.custom .chatListHeader button:hover{
+    background:var(--custom-primary-alpha, rgba(100,150,255,.2));
+}
 
 #bgBlur{
     position:fixed;
@@ -100,9 +183,13 @@ body.blue #bgBlur{
 body.purple #bgBlur{
     background:
         radial-gradient(700px 400px at 15% 15%, #3a1e5f, transparent 60%),
-        radial-gradient(700px 400px at 85% 85%, #27
-0f44, transparent 60%);
+        radial-gradient(700px 400px at 85% 85%, #270f44, transparent 60%);
 }
+
+/* Temas */
+body.light{background:#f1f2f4;color:#1a1a1a}
+body.blue{background:#0a1628;color:#e0f2ff}
+body.purple{background:#1a0a28;color:#f0e0ff}
 
 canvas{position:fixed;inset:0;z-index:-2}
 
@@ -222,19 +309,58 @@ body.light .searchBox input{background:rgba(0,0,0,.06);color:#111}
 .chatList{flex:1;overflow:auto}
 
 .chatItem{
-    margin:3px 6px;
-    padding:10px;
-    border-radius:10px;
+    margin:4px 8px;
+    padding:12px 14px;
+    border-radius:12px;
     cursor:pointer;
     display:flex;
     justify-content:space-between;
     align-items:center;
+    transition:all .3s ease;
+    border:1px solid transparent;
 }
 
-.chatItem:hover{background:rgba(255,255,255,.05)}
-.chatItem.active{background:rgba(255,255,255,.12)}
+.chatItem:hover{
+    background:rgba(255,255,255,.08);
+    border-color:rgba(255,255,255,.1);
+    transform:translateX(4px);
+}
 
-body.light .chatItem.active{background:rgba(0,0,0,.08)}
+.chatItem.active{
+    background:rgba(255,255,255,.12);
+    border-color:rgba(255,255,255,.15);
+    box-shadow:0 2px 8px rgba(0,0,0,.2);
+}
+
+body.light .chatItem:hover{
+    background:rgba(0,0,0,.05);
+    border-color:rgba(0,0,0,.08);
+}
+
+body.light .chatItem.active{
+    background:rgba(0,0,0,.08);
+    border-color:rgba(0,0,0,.12);
+}
+
+body.blue .chatItem:hover{
+    background:rgba(100,150,255,.1);
+    border-color:rgba(100,150,255,.2);
+}
+
+body.blue .chatItem.active{
+    background:rgba(100,150,255,.15);
+    border-color:rgba(100,150,255,.3);
+}
+
+body.purple .chatItem:hover{
+    background:rgba(150,100,255,.1);
+    border-color:rgba(150,100,255,.2);
+}
+
+body.purple .chatItem.active{
+    background:rgba(150,100,255,.15);
+    border-color:rgba(150,100,255,.3);
+}
 
 .chatItem span{
     flex:1;
@@ -292,16 +418,52 @@ body.light .settingsPanel{background:rgba(255,255,255,.85);color:#111}
     cursor:pointer;
 }
 
+.settingsRow select option{
+    background:#1a1a1a;
+    color:#eee;
+}
+
 body.light .settingsRow select{
     background:rgba(0,0,0,.08);
+}
+
+body.light .settingsRow select option{
+    background:#ffffff;
+    color:#111;
 }
 
 body.blue .settingsRow select{
     background:rgba(100,150,255,.2);
 }
 
+body.blue .settingsRow select option{
+    background:#0a1628;
+    color:#e0f2ff;
+}
+
 body.purple .settingsRow select{
     background:rgba(150,100,255,.2);
+}
+
+body.purple .settingsRow select option{
+    background:#1a0a28;
+    color:#f0e0ff;
+}
+
+#customThemePanel{
+    display:flex;
+    gap:10px;
+    padding:10px;
+    background:rgba(255,255,255,.05);
+    border-radius:8px;
+}
+
+#customThemePanel input[type="color"]{
+    width:50px;
+    height:35px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
 }
 
 .main{flex:1;display:flex;flex-direction:column}
@@ -385,38 +547,118 @@ body.light .msg.user{background:rgba(0,0,0,.10)}
 }
 
 .inputBar{
-    padding:12px;
+    padding:16px;
     display:flex;
-    gap:8px;
+    gap:10px;
     background:rgba(25,25,25,.45);
     backdrop-filter:blur(14px);
     border-top:1px solid rgba(255,255,255,.05);
+    align-items:center;
 }
 
 body.light .inputBar{background:rgba(255,255,255,.6)}
 
 .inputBar input[type="text"]{
     flex:1;
-    padding:10px 12px;
-    border-radius:10px;
-    border:none;
+    padding:12px 16px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,.1);
     outline:none;
-    background:#1c1c1c;
-    color:white;
+    background:rgba(255,255,255,.05) !important;
+    color:#eee !important;
+    font-size:15px;
+    transition:all .3s ease;
 }
 
-body.light .inputBar input[type="text"]{background:#ffffff;color:#111}
+.inputBar input[type="text"]::placeholder{
+    color:rgba(255,255,255,.5) !important;
+}
+
+.inputBar input[type="text"]:focus{
+    border-color:rgba(255,255,255,.2);
+    background:rgba(255,255,255,.08) !important;
+    box-shadow:0 0 0 3px rgba(255,255,255,.05);
+}
+
+body.light .inputBar input[type="text"]{
+    background:rgba(0,0,0,.05) !important;
+    color:#111 !important;
+    border-color:rgba(0,0,0,.1);
+}
+
+body.light .inputBar input[type="text"]::placeholder{
+    color:rgba(0,0,0,.5) !important;
+}
+
+body.light .inputBar input[type="text"]:focus{
+    border-color:rgba(0,0,0,.15);
+    background:rgba(0,0,0,.08) !important;
+    box-shadow:0 0 0 3px rgba(0,0,0,.03);
+}
+
+body.blue .inputBar input[type="text"]{
+    background:rgba(100,150,255,.08) !important;
+    border-color:rgba(100,150,255,.15);
+}
+
+body.blue .inputBar input[type="text"]:focus{
+    background:rgba(100,150,255,.12) !important;
+    border-color:rgba(100,150,255,.3);
+}
+
+body.purple .inputBar input[type="text"]{
+    background:rgba(150,100,255,.08) !important;
+    border-color:rgba(150,100,255,.15);
+}
+
+body.purple .inputBar input[type="text"]:focus{
+    background:rgba(150,100,255,.12) !important;
+    border-color:rgba(150,100,255,.3);
+}
 
 .inputBar button{
-    padding:10px 14px;
-    border-radius:10px;
+    padding:12px 18px;
+    border-radius:12px;
     border:none;
-    background:#555;
-    color:white;
+    background:rgba(255,255,255,.12);
+    color:inherit;
     cursor:pointer;
+    font-weight:600;
+    transition:all .3s ease;
 }
 
-body.light .inputBar button{background:#ddd;color:#111}
+.inputBar button:hover{
+    background:rgba(255,255,255,.18);
+    transform:translateY(-2px);
+}
+
+.inputBar button:active{
+    transform:translateY(0);
+}
+
+body.light .inputBar button{
+    background:rgba(0,0,0,.08);
+}
+
+body.light .inputBar button:hover{
+    background:rgba(0,0,0,.12);
+}
+
+body.blue .inputBar button{
+    background:rgba(100,150,255,.2);
+}
+
+body.blue .inputBar button:hover{
+    background:rgba(100,150,255,.3);
+}
+
+body.purple .inputBar button{
+    background:rgba(150,100,255,.2);
+}
+
+body.purple .inputBar button:hover{
+    background:rgba(150,100,255,.3);
+}
 
 .home{margin:auto;font-size:52px;opacity:.6;font-weight:600}
 
