@@ -48,25 +48,23 @@
   <div class="settingsWrap">
     <button class="settingsBtn" onclick="toggleSettings()" aria-label="Configuración">⚙</button>
     <div class="settingsPanel" id="settingsPanel">
+
       <div class="settingsRow">
         <span>Tema</span>
+
+        <!-- SOLO OSCURO Y CLARO -->
         <select id="themeSelect" onchange="changeTheme()">
           <option value="dark">Oscuro</option>
           <option value="light">Claro</option>
-          <option value="blue">Azul</option>
-          <option value="purple">Púrpura</option>
-          <option value="custom">Personalizado</option>
         </select>
       </div>
-      <div id="customThemePanel" style="display:none;margin-top:10px">
-        <input type="color" id="colorPrimary" onchange="updateCustomTheme()">
-        <input type="color" id="colorSecondary" onchange="updateCustomTheme()">
-      </div>
+
       <div class="settingsRow">
         <button onclick="logout()" style="width:100%;padding:8px;border-radius:6px;border:none;background:rgba(255,100,100,.3);cursor:pointer;color:inherit;margin-top:10px">
           Cerrar Sesión
         </button>
       </div>
+
     </div>
   </div>
 </div>

@@ -124,36 +124,25 @@ function getUserId() {
 
 // Tema
 async function loadTheme() {
-  try {
-    const res = await fetch(API_URL + '/theme', {
-      headers: { 'Authorization': `Bearer ${token}` }
-    });
-    const data = await res.json();
-    
-    if (data.theme) {
-      document.getElementById('themeSelect').value = data.theme;
-      document.body.className = data.theme;
-    }
-  } catch (err) {
-    console.error('Error cargando tema:', err);
+  const savedTheme = localStorage.getItem("theme") || "dark";
+  document.getElementById("themeSelect").value = savedTheme;
+  document.body.classList.remove("theme-dark", "theme-light");
+  if (savedTheme === "dark") {
+    document.body.classList.add("theme-dark");
+  } else {
+    document.body.classList.add("theme-light");
   }
 }
 
-async function changeTheme() {
-  const theme = document.getElementById('themeSelect').value;
-  document.body.className = theme;
-
-  try {
-    await fetch(API_URL + '/theme', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ theme })
-    });
-  } catch (err) {
-    console.error('Error guardando tema:', err);
+function changeTheme() {
+  const theme = document.getElementById("themeSelect").value;
+  document.body.classList.remove("theme-dark", "theme-light");
+  if (theme === "dark") {
+    document.body.classList.add("theme-dark");
+    localStorage.setItem("theme", "dark");
+  } else {
+    document.body.classList.add("theme-light");
+    localStorage.setItem("theme", "light");
   }
 }
 
