@@ -387,6 +387,8 @@ async function sendMsg() {
       });
     }
 
+    playSound('send');
+
     // Mostrar typing
     showTypingIndicator();
 
@@ -426,6 +428,8 @@ async function sendMsg() {
         message: { role: 'bot', text: botText }
       });
     }
+
+    playSound('receive');
 
     await loadChats();
   } catch (err) {
@@ -835,6 +839,30 @@ function toggleArchived() {
   showingArchived = !showingArchived;
   // TODO: Implementar filtro de archivados
   alert('Función de archivados próximamente');
+}
+
+// Sonidos
+function playSound(type) {
+  const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  const oscillator = audioContext.createOscillator();
+  const gainNode = audioContext.createGain();
+  
+  oscillator.connect(gainNode);
+  gainNode.connect(audioContext.destination);
+  
+  if (type === 'send') {
+    oscillator.frequency.value = 800;
+    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.1);
+  } else if (type === 'receive') {
+    oscillator.frequency.value = 600;
+    gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.15);
+  }
 }
 
 // Forzar estilo del input
