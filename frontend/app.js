@@ -583,6 +583,85 @@ async function handleFileUpload() {
   const file = fileInput.files[0];
   if (!file || !currentChatId) return;
 
+  // Si es imagen, convertir a base64 y enviar a la IA
+  if (file.type.startsWith('image/')) {
+    const reader = new FileReader();
+    
+    reader.onload = async (e) => {
+      const base64Image = e.target.result;
+      
+      try {
+        // Mostrar imagen del usuario
+        appendMessage({
+          role: 'user',
+          text: '¿Qué ves en esta imagen?',
+          attachments: [{ type: file.type, url: base64Image, filename: file.name }]
+        });
+
+        // Guardar mensaje con imagen
+        await fetch(API_URL + `/chat/${currentChatId}/message`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            role: 'user',
+            text: '¿Qué ves en esta imagen?',
+            attachments: [{ type: file.type, url: base64Image, filename: file.name }]
+          })
+        });
+
+        // Mostrar typing
+        showTypingIndicator();
+
+        // Enviar a la IA con visión
+        const res = await fetch(API_URL + '/ai/generate', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            messages: [{
+              role: 'user',
+              text: '¿Qué ves en esta imagen? Describila en detalle.',
+              image: base64Image
+            }]
+          })
+        });
+
+        const data = await res.json();
+        hideTypingIndicator();
+
+        const botText = data.text || data.fallback;
+
+        // Guardar respuesta del bot
+        await fetch(API_URL + `/chat/${currentChatId}/message`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ role: 'bot', text: botText })
+        });
+
+        appendMessage({ role: 'bot', text: botText });
+
+        await loadChats();
+      } catch (err) {
+        hideTypingIndicator();
+        console.error('Error analizando imagen:', err);
+        alert('Error al analizar imagen');
+      }
+    };
+
+    reader.readAsDataURL(file);
+    fileInput.value = '';
+    return;
+  }
+
+  // Para otros archivos, subir normalmente
   const formData = new FormData();
   formData.append('file', file);
 

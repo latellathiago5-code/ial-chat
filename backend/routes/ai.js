@@ -8,6 +8,29 @@ router.post('/generate', auth, async (req, res) => {
   try {
     const { messages } = req.body;
 
+    // Detectar si hay imágenes en los mensajes
+    const hasImages = messages.some(m => m.image);
+    const model = hasImages ? 'llama-3.2-90b-vision-preview' : 'llama-3.3-70b-versatile';
+
+    // Formatear mensajes para la API
+    const formattedMessages = messages.map(m => {
+      const msg = {
+        role: m.role === 'bot' ? 'assistant' : m.role,
+      };
+
+      // Si tiene imagen, usar formato de contenido múltiple
+      if (m.image) {
+        msg.content = [
+          { type: 'text', text: m.text || '¿Qué ves en esta imagen?' },
+          { type: 'image_url', image_url: { url: m.image } }
+        ];
+      } else {
+        msg.content = m.text;
+      }
+
+      return msg;
+    });
+
     const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -15,13 +38,10 @@ router.post('/generate', auth, async (req, res) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'llama-3.3-70b-versatile',
+        model,
         messages: [
-          { role: 'system', content: 'Sos un asistente útil que siempre responde en español. Respondé de forma clara, amigable y concisa.' },
-          ...messages.map(m => ({
-          role: m.role === 'bot' ? 'assistant' : m.role,
-          content: m.text
-        })),
+          { role: 'system', content: 'Sos un asistente útil que siempre responde en español. Respondé de forma clara, amigable y concisa. Si te muestran una imagen, describila y analizala en detalle.' },
+          ...formattedMessages
         ],
         temperature: 0.7,
         max_tokens: 1000
