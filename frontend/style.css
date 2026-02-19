@@ -506,6 +506,180 @@ body.purple .settingsRow select option{
     color:#f0e0ff;
 }
 
+body.neon .sidebar{
+    background:rgba(0,255,136,.1);
+    border-right:1px solid rgba(0,255,136,.2);
+}
+
+body.neon .msg.user{
+    background:rgba(0,255,136,.15);
+    border:1px solid rgba(0,255,136,.3);
+}
+
+body.neon .msg.bot{
+    background:rgba(0,136,255,.15);
+    border:1px solid rgba(0,136,255,.3);
+}
+
+body.neon .chatItem:hover{
+    background:rgba(0,255,136,.1);
+    border-color:rgba(0,255,136,.2);
+}
+
+body.neon .chatItem.active{
+    background:rgba(0,255,136,.15);
+    border-color:rgba(0,255,136,.3);
+}
+
+body.neon .inputBar input[type="text"]{
+    background:rgba(0,255,136,.08);
+    color:#00ff88;
+}
+
+body.neon .inputBar button{
+    background:rgba(0,255,136,.2);
+    color:#00ff88;
+}
+
+body.neon .inputBar button:hover{
+    background:rgba(0,255,136,.3);
+}
+
+body.neon .topBar{
+    background:rgba(0,255,136,.05);
+    border-bottom:1px solid rgba(0,255,136,.2);
+}
+
+body.minimal .sidebar{
+    background:rgba(0,0,0,.02);
+    border-right:1px solid rgba(0,0,0,.1);
+}
+
+body.minimal .msg.user{
+    background:rgba(0,0,0,.05);
+    border:1px solid rgba(0,0,0,.1);
+}
+
+body.minimal .msg.bot{
+    background:rgba(0,0,0,.03);
+    border:1px solid rgba(0,0,0,.08);
+}
+
+body.minimal .chatItem:hover{
+    background:rgba(0,0,0,.04);
+    border-color:rgba(0,0,0,.08);
+}
+
+body.minimal .chatItem.active{
+    background:rgba(0,0,0,.08);
+    border-color:rgba(0,0,0,.12);
+}
+
+body.minimal .inputBar input[type="text"]{
+    background:rgba(0,0,0,.04);
+    color:#222;
+}
+
+body.minimal .inputBar button{
+    background:rgba(0,0,0,.08);
+    color:#222;
+}
+
+body.minimal .inputBar button:hover{
+    background:rgba(0,0,0,.12);
+}
+
+body.minimal .topBar{
+    background:rgba(0,0,0,.02);
+    border-bottom:1px solid rgba(0,0,0,.08);
+}
+
+body.neon .sidebar{
+    background:rgba(0,255,136,.1);
+    backdrop-filter:blur(18px);
+    border:1px solid rgba(0,255,136,.2);
+}
+
+body.neon .msg.user{
+    background:rgba(0,255,136,.15);
+    border:1px solid rgba(0,255,136,.3);
+}
+
+body.neon .msg.bot{
+    background:rgba(0,136,255,.15);
+}
+
+body.neon .chatItem:hover{
+    background:rgba(0,255,136,.1);
+    border-color:rgba(0,255,136,.2);
+}
+
+body.neon .chatItem.active{
+    background:rgba(0,255,136,.15);
+    border-color:rgba(0,255,136,.3);
+}
+
+body.neon .inputBar input[type="text"]{
+    background:rgba(0,255,136,.08);
+    border-color:rgba(0,255,136,.15);
+}
+
+body.neon .inputBar button{
+    background:rgba(0,255,136,.2);
+}
+
+body.neon .inputBar button:hover{
+    background:rgba(0,255,136,.3);
+}
+
+body.neon .topBar{
+    background:rgba(0,255,136,.05);
+    border-bottom:1px solid rgba(0,255,136,.1);
+}
+
+body.minimal .sidebar{
+    background:rgba(0,0,0,.02);
+    backdrop-filter:blur(18px);
+    border-right:1px solid rgba(0,0,0,.1);
+}
+
+body.minimal .msg.user{
+    background:rgba(0,0,0,.08);
+    border:1px solid rgba(0,0,0,.1);
+}
+
+body.minimal .msg.bot{
+    background:rgba(0,0,0,.04);
+}
+
+body.minimal .chatItem:hover{
+    background:rgba(0,0,0,.05);
+    border-color:rgba(0,0,0,.1);
+}
+
+body.minimal .chatItem.active{
+    background:rgba(0,0,0,.08);
+    border-color:rgba(0,0,0,.15);
+}
+
+body.minimal .inputBar input[type="text"]{
+    background:rgba(0,0,0,.04);
+    border-color:rgba(0,0,0,.1);
+}
+
+body.minimal .inputBar button{
+    background:rgba(0,0,0,.06);
+}
+
+body.minimal .inputBar button:hover{
+    background:rgba(0,0,0,.1);
+}
+
+body.minimal .topBar{
+    background:rgba(0,0,0,.02);
+    border-bottom:1px solid rgba(0,0,0,.08);
+}
+
 #customThemePanel{
     display:flex;
     gap:10px;
