@@ -11,40 +11,41 @@ router.post('/generate', auth, async (req, res) => {
     // Detectar si hay imágenes en los mensajes
     const hasImages = messages.some(m => m.image);
 
-    // Si hay imágenes, usar Gemini; si no, usar Groq
+    // Si hay imágenes, usar Groq con Llama Vision
     if (hasImages) {
-      console.log('Usando Gemini para análisis de imagen');
+      console.log('Usando Groq Llama Vision para análisis de imagen');
       
-      // Usar Gemini para imágenes
       const imageMessage = messages.find(m => m.image);
-      const base64Data = imageMessage.image.split(',')[1]; // Remover el prefijo data:image/...
       
-      const geminiResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=${process.env.GEMINI_API_KEY}`, {
+      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Authorization': `Bearer ${process.env.GROQ_API_KEY}`,
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify({
-          contents: [{
-            parts: [
-              { text: imageMessage.text || '¿Qué ves en esta imagen? Describila en detalle en español.' },
-              {
-                inline_data: {
-                  mime_type: 'image/jpeg',
-                  data: base64Data
-                }
-              }
+          model: 'llama-3.2-11b-vision-preview',
+          messages: [{
+            role: 'user',
+            content: [
+              { type: 'text', text: '¿Qué ves en esta imagen? Describila en detalle en español.' },
+              { type: 'image_url', image_url: { url: imageMessage.image } }
             ]
-          }]
+          }],
+          temperature: 0.7,
+          max_tokens: 1000
         })
       });
 
-      const geminiData = await geminiResponse.json();
-      console.log('Respuesta de Gemini:', geminiData);
+      const data = await response.json();
+      console.log('Respuesta de Groq Vision:', data);
 
-      if (!geminiResponse.ok) {
-        throw new Error(geminiData.error?.message || 'Error en Gemini API');
+      if (!response.ok) {
+        console.error('Error de Groq:', data);
+        throw new Error(data.error?.message || 'Error en Groq API');
       }
 
-      const text = geminiData.candidates[0].content.parts[0].text;
+      const text = data.choices[0].message.content;
       return res.json({ text });
     }
 
