@@ -10,7 +10,10 @@ router.post('/generate', auth, async (req, res) => {
 
     // Detectar si hay imágenes en los mensajes
     const hasImages = messages.some(m => m.image);
-    const model = hasImages ? 'llama-3.2-90b-vision-preview' : 'llama-3.3-70b-versatile';
+    const model = hasImages ? 'llama-3.2-11b-vision-preview' : 'llama-3.3-70b-versatile';
+
+    console.log('Modelo seleccionado:', model);
+    console.log('Tiene imágenes:', hasImages);
 
     // Formatear mensajes para la API
     const formattedMessages = messages.map(m => {
@@ -20,6 +23,7 @@ router.post('/generate', auth, async (req, res) => {
 
       // Si tiene imagen, usar formato de contenido múltiple
       if (m.image) {
+        console.log('Procesando mensaje con imagen');
         msg.content = [
           { type: 'text', text: m.text || '¿Qué ves en esta imagen?' },
           { type: 'image_url', image_url: { url: m.image } }
@@ -31,26 +35,33 @@ router.post('/generate', auth, async (req, res) => {
       return msg;
     });
 
+    const requestBody = {
+      model,
+      messages: [
+        { role: 'system', content: 'Sos un asistente útil que siempre responde en español. Respondé de forma clara, amigable y concisa. Si te muestran una imagen, describila y analizala en detalle.' },
+        ...formattedMessages
+      ],
+      temperature: 0.7,
+      max_tokens: 1000
+    };
+
+    console.log('Request body:', JSON.stringify(requestBody, null, 2).substring(0, 500));
+
     const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${process.env.GROQ_API_KEY}`,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        model,
-        messages: [
-          { role: 'system', content: 'Sos un asistente útil que siempre responde en español. Respondé de forma clara, amigable y concisa. Si te muestran una imagen, describila y analizala en detalle.' },
-          ...formattedMessages
-        ],
-        temperature: 0.7,
-        max_tokens: 1000
-      })
+      body: JSON.stringify(requestBody)
     });
 
     const data = await response.json();
 
+    console.log('Respuesta de Groq:', data);
+
     if (!response.ok) {
+      console.error('Error de Groq:', data);
       throw new Error(data.error?.message || 'Error en Groq API');
     }
 
