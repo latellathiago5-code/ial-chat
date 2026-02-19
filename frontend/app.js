@@ -243,7 +243,15 @@ function renderChatList(chats) {
     const span = document.createElement('span');
     span.textContent = chat.title || 'Nuevo chat';
 
-    span.ondblclick = (e) => {
+    const editBtn = document.createElement('button');
+    editBtn.textContent = '✏️';
+    editBtn.style.background = 'none';
+    editBtn.style.border = 'none';
+    editBtn.style.cursor = 'pointer';
+    editBtn.style.fontSize = '14px';
+    editBtn.style.marginLeft = 'auto';
+    editBtn.style.marginRight = '4px';
+    editBtn.onclick = (e) => {
       e.stopPropagation();
       renameChat(span, chat._id);
     };
@@ -258,6 +266,7 @@ function renderChatList(chats) {
     div.onclick = () => openChat(chat._id);
 
     div.appendChild(span);
+    div.appendChild(editBtn);
     div.appendChild(del);
     list.appendChild(div);
   });
@@ -581,14 +590,33 @@ function downloadFile(filename, content) {
 async function handleFileUpload() {
   const fileInput = document.getElementById('fileInput');
   const file = fileInput.files[0];
-  if (!file || !currentChatId) return;
+  
+  console.log('Archivo seleccionado:', file);
+  
+  if (!file) {
+    console.log('No hay archivo');
+    return;
+  }
+  
+  if (!currentChatId) {
+    alert('Creá un chat primero');
+    return;
+  }
 
   // Si es imagen, convertir a base64 y enviar a la IA
   if (file.type.startsWith('image/')) {
+    console.log('Es una imagen, procesando...');
+    
     const reader = new FileReader();
+    
+    reader.onerror = (error) => {
+      console.error('Error leyendo archivo:', error);
+      alert('Error al leer la imagen');
+    };
     
     reader.onload = async (e) => {
       const base64Image = e.target.result;
+      console.log('Imagen convertida a base64');
       
       try {
         // Mostrar imagen del usuario
@@ -615,6 +643,8 @@ async function handleFileUpload() {
         // Mostrar typing
         showTypingIndicator();
 
+        console.log('Enviando imagen a la IA...');
+
         // Enviar a la IA con visión
         const res = await fetch(API_URL + '/ai/generate', {
           method: 'POST',
@@ -632,9 +662,11 @@ async function handleFileUpload() {
         });
 
         const data = await res.json();
+        console.log('Respuesta de la IA:', data);
+        
         hideTypingIndicator();
 
-        const botText = data.text || data.fallback;
+        const botText = data.text || data.fallback || 'No pude analizar la imagen';
 
         // Guardar respuesta del bot
         await fetch(API_URL + `/chat/${currentChatId}/message`, {
@@ -652,7 +684,7 @@ async function handleFileUpload() {
       } catch (err) {
         hideTypingIndicator();
         console.error('Error analizando imagen:', err);
-        alert('Error al analizar imagen');
+        alert('Error al analizar imagen: ' + err.message);
       }
     };
 
@@ -662,6 +694,8 @@ async function handleFileUpload() {
   }
 
   // Para otros archivos, subir normalmente
+  console.log('Archivo no es imagen, subiendo normalmente...');
+  
   const formData = new FormData();
   formData.append('file', file);
 
@@ -696,7 +730,7 @@ async function handleFileUpload() {
     fileInput.value = '';
   } catch (err) {
     console.error('Error subiendo archivo:', err);
-    alert('Error al subir archivo');
+    alert('Error al subir archivo: ' + err.message);
   }
 }
 
