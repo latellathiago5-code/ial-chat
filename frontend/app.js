@@ -1,4 +1,6 @@
-const API_URL = 'http://localhost:3000/api';
+const API_URL = window.location.hostname === 'localhost' 
+  ? 'http://localhost:3000/api' 
+  : '/api';
 let token = localStorage.getItem('ial_token');
 let currentChatId = null;
 let socket = null;
@@ -91,7 +93,11 @@ async function initApp() {
 
 // WebSocket
 function initWebSocket() {
-  socket = io('http://localhost:3000');
+  const socketUrl = window.location.hostname === 'localhost'
+    ? 'http://localhost:3000'
+    : window.location.origin;
+  
+  socket = io(socketUrl);
   
   socket.on('connect', () => {
     console.log('WebSocket conectado');
