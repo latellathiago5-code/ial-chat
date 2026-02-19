@@ -696,3 +696,38 @@ function initParticles() {
   }
   loop();
 }
+
+
+// Contador de caracteres
+function updateCharCount() {
+  const input = document.getElementById('msgInput');
+  const counter = document.getElementById('charCount');
+  if (input && counter) {
+    counter.textContent = `${input.value.length}/2000`;
+  }
+}
+
+// Pantalla completa
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen();
+  } else {
+    document.exitFullscreen();
+  }
+}
+
+// Chats archivados
+let showingArchived = false;
+function toggleArchived() {
+  showingArchived = !showingArchived;
+  // TODO: Implementar filtro de archivados
+  alert('Función de archivados próximamente');
+}
+
+// Forzar estilo del input
+document.addEventListener('DOMContentLoaded', () => {
+  const input = document.getElementById('msgInput');
+  if (input) {
+    input.setAttribute('autocomplete', 'off');
+  }
+});
