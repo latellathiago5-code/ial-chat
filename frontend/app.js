@@ -603,9 +603,9 @@ async function handleFileUpload() {
     return;
   }
 
-  // Si es imagen, convertir a base64 y enviar a la IA
+  // Si es imagen, solo mostrarla (sin análisis por ahora)
   if (file.type.startsWith('image/')) {
-    console.log('Es una imagen, procesando...');
+    console.log('Es una imagen, mostrando...');
     
     const reader = new FileReader();
     
@@ -622,7 +622,7 @@ async function handleFileUpload() {
         // Mostrar imagen del usuario
         appendMessage({
           role: 'user',
-          text: '¿Qué ves en esta imagen?',
+          text: file.name,
           attachments: [{ type: file.type, url: base64Image, filename: file.name }]
         });
 
@@ -635,56 +635,15 @@ async function handleFileUpload() {
           },
           body: JSON.stringify({
             role: 'user',
-            text: '¿Qué ves en esta imagen?',
+            text: file.name,
             attachments: [{ type: file.type, url: base64Image, filename: file.name }]
           })
         });
 
-        // Mostrar typing
-        showTypingIndicator();
-
-        console.log('Enviando imagen a la IA...');
-
-        // Enviar a la IA con visión
-        const res = await fetch(API_URL + '/ai/generate', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            messages: [{
-              role: 'user',
-              text: '¿Qué ves en esta imagen? Describila en detalle.',
-              image: base64Image
-            }]
-          })
-        });
-
-        const data = await res.json();
-        console.log('Respuesta de la IA:', data);
-        
-        hideTypingIndicator();
-
-        const botText = data.text || data.fallback || 'No pude analizar la imagen';
-
-        // Guardar respuesta del bot
-        await fetch(API_URL + `/chat/${currentChatId}/message`, {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ role: 'bot', text: botText })
-        });
-
-        appendMessage({ role: 'bot', text: botText });
-
         await loadChats();
       } catch (err) {
-        hideTypingIndicator();
-        console.error('Error analizando imagen:', err);
-        alert('Error al analizar imagen: ' + err.message);
+        console.error('Error guardando imagen:', err);
+        alert('Error al guardar imagen: ' + err.message);
       }
     };
 
