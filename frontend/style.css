@@ -8,6 +8,67 @@ body{
     transition:background .3s, color .3s;
 }
 
+/* Animaciones de entrada */
+@keyframes fadeInUp{
+    from{opacity:0;transform:translateY(30px)}
+    to{opacity:1;transform:translateY(0)}
+}
+
+@keyframes fadeIn{
+    from{opacity:0}
+    to{opacity:1}
+}
+
+@keyframes slideInLeft{
+    from{opacity:0;transform:translateX(-50px)}
+    to{opacity:1;transform:translateX(0)}
+}
+
+@keyframes slideInRight{
+    from{opacity:0;transform:translateX(50px)}
+    to{opacity:1;transform:translateX(0)}
+}
+
+.app{
+    animation:fadeIn 0.3s ease-out;
+}
+
+.sidebar{
+    animation:slideInLeft 0.5s ease-out;
+}
+
+.main{
+    animation:fadeIn 0.6s ease-out;
+}
+
+.topBar{
+    animation:slideInRight 0.7s ease-out;
+}
+
+.chatPanel{
+    animation:fadeInUp 0.9s ease-out;
+}
+
+.inputBar{
+    animation:fadeInUp 1s ease-out;
+}
+
+.msg{
+    animation:fadeInUp 0.4s ease-out;
+}
+
+.chatItem{
+    animation:fadeInUp 0.3s ease-out;
+}
+
+.modal{
+    animation:fadeIn 0.3s ease-out;
+}
+
+.modal-content{
+    animation:fadeInUp 0.4s ease-out;
+}
+
 /* Temas */
 body.light{background:#f1f2f4;color:#1a1a1a}
 body.blue{background:#0a1628;color:#e0f2ff}
